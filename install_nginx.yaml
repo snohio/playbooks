@@ -1,0 +1,41 @@
+---
+- name: Install and configure nginx
+  hosts: localhost
+  become: yes  
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install nginx
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Start nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create Hello World index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Hello World</title>
+          </head>
+          <body>
+              <h1>Hello World</h1>
+          </body>
+          </html>
+
+    - name: Ensure nginx is running
+      service:
+        name: nginx
+        state: started
