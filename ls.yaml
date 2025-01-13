@@ -1,0 +1,12 @@
+---
+
+- name: Courier Running Ansible Playbook Demo 
+  connection: local
+  gather_facts: true
+  hosts: localhost
+  tasks:
+    - name: "just execute a ls -lrt command"
+      shell: "ls -lrt"
+      register: "output"
+
+    - debug: var=output.stdout_lines
