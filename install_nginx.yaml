@@ -2,7 +2,6 @@
 - name: Install and configure nginx
   connection: local
   hosts: localhost
-  become: yes  
   tasks:
     - name: Install nginx
       apt:
