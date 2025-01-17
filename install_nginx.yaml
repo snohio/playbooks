@@ -1,6 +1,7 @@
 ---
 - name: Install and configure nginx
   connection: local
+  gather_facts: true
   hosts: localhost
   tasks:
     - name: Install nginx
