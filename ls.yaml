@@ -1,9 +1,9 @@
 ---
 
 - name: Courier Running Ansible Playbook Demo 
+  hosts: localhost
   connection: local
   gather_facts: true
-  hosts: localhost
   tasks:
     - name: "just execute a ls -lrt command"
       shell: "ls -lrt"
