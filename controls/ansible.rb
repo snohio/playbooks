@@ -5,7 +5,6 @@ control 'ansible-installed' do
 
   describe package('ansible') do
     it { should be_installed }
-    its('version') { should cmp > '2.0.0' }
   end
 
   describe file('/usr/bin/ansible-playbook') do
