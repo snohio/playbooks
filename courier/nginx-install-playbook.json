@@ -1,0 +1,130 @@
+{
+  "name": "INSTALL NGINX with ANSIBLE PLAYBOOK if InSpec Test Passes - node-linux",
+  "description": "Install NGINX with Ansible Playbook if InSpec Test Passes",
+  "exceptionRules": [],
+  "scheduleRule": "immediate",
+  "target": {
+    "executionType": "sequential",
+    "groups": [
+      {
+        "batchSize": {
+          "type": "number",
+          "value": 1
+        },
+        "distributionMethod": "batching",
+        "earlyTermination": false,
+        "filter": null,
+        "filterId": "00000000-0000-0000-0000-000000000000",
+        "listId": "00000000-0000-0000-0000-000000000000",
+        "nodeIdentifiers": [
+          "36a487d6-ae25-4b06-a17a-57b2a8905c36"
+        ],
+        "nodeListType": "nodes",
+        "successCriteria": [
+          {
+            "numRuns": {
+              "type": "percent",
+              "value": 100
+            },
+            "status": "success"
+          }
+        ],
+        "timeoutSeconds": 240
+      }
+    ]
+  },
+  "actions": {
+    "accessMode": "agent",
+    "steps": [
+      {
+        "command": {
+          "args": {
+            "path": "https://github.com/snohio/playbooks"
+          },
+          "exec": "scan"
+        },
+        "conditions": [],
+        "description": "",
+        "expectedInputs": {},
+        "failureBehavior": {
+          "action": "retryThenFail",
+          "retryBackoffStrategy": {
+            "arguments": [],
+            "delaySeconds": 0,
+            "type": "linear"
+          }
+        },
+        "inputs": {},
+        "interpreter": {
+          "name": "chef-platform/inspec-interpreter",
+          "skill": {
+            "maxVersion": "5.22.95",
+            "minVersion": "1"
+          }
+        },
+        "limits": {
+          "cores": 0,
+          "cpu": 1,
+          "timeoutSeconds": 0
+        },
+        "name": "Ansible InSpec Test",
+        "outputFieldRules": {
+          "ANSIBLE_INSPEC": {
+            "expression": "",
+            "extractMethod": "content",
+            "required": true,
+            "sensitive": false,
+            "source": "stdout",
+            "sourceType": "output"
+          }
+        },
+        "retryCount": 1
+      },
+      {
+        "command": {
+          "playbook_source": "https://raw.githubusercontent.com/snohio/playbooks/refs/heads/main/install_nginx.yaml"
+        },
+        "conditions": [
+          {
+            "inputName": "ANSIBLE_INSPEC",
+            "negate": false,
+            "operator": "contains",
+            "value": "0 control failures"
+          }
+        ],
+        "description": "",
+        "expectedInputs": {
+          "ANSIBLE_INSPEC": {
+            "default": "",
+            "required": true,
+            "sensitive": false
+          }
+        },
+        "failureBehavior": {
+          "action": "retryThenFail",
+          "retryBackoffStrategy": {
+            "arguments": [],
+            "delaySeconds": 0,
+            "type": "linear"
+          }
+        },
+        "inputs": {},
+        "interpreter": {
+          "name": "chef-platform/ansible-interpreter",
+          "skill": {
+            "maxVersion": "2.0.0",
+            "minVersion": "0.1.0"
+          }
+        },
+        "limits": {
+          "cores": 0,
+          "cpu": 1,
+          "timeoutSeconds": 0
+        },
+        "name": "ansible get ls",
+        "outputFieldRules": {},
+        "retryCount": 1
+      }
+    ]
+  }
+}
