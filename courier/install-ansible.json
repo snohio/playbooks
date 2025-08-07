@@ -19,7 +19,7 @@
         "nodeIdentifiers": [
           "d38bb609-150d-41a8-8ebf-a73c967d96ce"
         ],
-        "nodeListType": "savedList",
+        "nodeListType": "node",
         "successCriteria": [
           {
             "numRuns": {
