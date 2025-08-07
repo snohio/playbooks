@@ -8,10 +8,35 @@
     LANG: en_US.UTF-8
     LANGUAGE: en_US.UTF-8
   tasks:
-    - name: Install nginx
+    - name: Clean up broken nginx installation
+      shell: |
+        dpkg --configure -a
+        apt-get -f install -y
+      ignore_errors: true
+      when: ansible_os_family == "Debian"
+
+    - name: Remove broken nginx packages
+      apt:
+        name: 
+          - nginx
+          - nginx-core
+          - nginx-common
+        state: absent
+        purge: true
+      when: ansible_os_family == "Debian"
+      ignore_errors: true
+
+    - name: Update package cache
+      apt:
+        update_cache: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install nginx without starting service
       apt:
         name: nginx
         state: present
+      environment:
+        RUNLEVEL: "1"
       when: ansible_os_family == "Debian"
 
     - name: Install nginx

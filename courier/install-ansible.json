@@ -81,8 +81,13 @@
           "command": {
             "linux": [
                 "sudo apt install software-properties-common",
-                "sudo apt-add-repository --yes --update ppa:ansible/ansible",
-                "sudo apt install --yes ansible"
+                "sudo apt-add-repository --update ppa:ansible/ansible --yes",
+                "sudo apt install ansible --yes",
+                "sudo locale-gen en_US.UTF-8",
+                "sudo update-locale LANG=en_US.UTF-8",
+                "export LC_ALL=en_US.UTF-8",
+                "export LANG=en_US.UTF-8",
+                "export LANGUAGE=en_US.UTF-8"
             ]
           },
           "conditions": [
