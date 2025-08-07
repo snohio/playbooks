@@ -111,15 +111,15 @@
                               <div class="tech-stack">
                                   <h3>Technology Stack</h3>
                                   <ul style="list-style: none; padding: 0;">
-                                      <li>🐧 <strong>OS:</strong> ${facts['os']['name']} ${facts['os']['release']['full']}</li>
+                                      <li>🐧 <strong>OS:</strong> {{ ansible_distribution }} {{ ansible_distribution_version }}</li>
                                       <li>🌐 <strong>Web Server:</strong> NGINX</li>
-                                      <li>🤖 <strong>Configuration Management:</strong> Puppet</li>
+                                      <li>🤖 <strong>Configuration Management:</strong> Ansible</li>
                                       <li>👨‍🍳 <strong>Orchestration:</strong> Chef Courier</li>
                                   </ul>
                               </div>
                               
                               <p style="margin-top: 20px; font-size: 14px; color: #999;">
-                                  Server: ${facts['networking']['fqdn']}
+                                  Server: {{ ansible_fqdn }}
                               </p>
                           </div>
                       </div>
